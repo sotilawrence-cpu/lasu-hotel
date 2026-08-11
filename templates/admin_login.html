@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="section" style="max-width:400px; margin:0 auto;">
+    <h2>Admin Login</h2>
+    {% if error %}
+    <p style="color:#721c24; background:#f8d7da; padding:10px; border-radius:8px;">{{ error }}</p>
+    {% endif %}
+    <form method="POST" action="/admin/login" class="booking-form">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit" class="btn-primary" style="margin-top:20px; cursor:pointer;">Login</button>
+    </form>
+</section>
+
+{% endblock %}

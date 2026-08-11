@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="section">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>Admin Dashboard</h2>
+    <a href="/admin/logout" class="action-link cancel">Logout</a>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>{{ stats.total_bookings }}</h3>
+            <p>Total Bookings</p>
+        </div>
+        <div class="stat-card">
+            <h3>{{ stats.confirmed_count }}</h3>
+            <p>Confirmed</p>
+        </div>
+        <div class="stat-card">
+            <h3>{{ stats.pending_count }}</h3>
+            <p>Pending</p>
+        </div>
+        <div class="stat-card">
+            <h3>${{ stats.revenue }}</h3>
+            <p>Est. Revenue</p>
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Guest</th>
+                    <th>Email</th>
+                    <th>Room</th>
+                    <th>Check-in</th>
+                    <th>Check-out</th>
+                    <th>Status</th>
+                    <th>Payment</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in bookings %}
+                <tr>
+                    <td>{{ b.name }}</td>
+                    <td>{{ b.email }}</td>
+                    <td>{{ b.room.name }}</td>
+                    <td>{{ b.checkin }}</td>
+                    <td>{{ b.checkout }}</td>
+                    <td><span class="badge badge-{{ b.status|lower }}">{{ b.status }}</span></td>
+                    <td><span class="badge badge-{{ b.payment_status|lower }}">{{ b.payment_status }}</span></td>
+                        {% if b.status == "Pending" %}
+                        <a href="/admin/booking/{{ b.id }}/confirm" class="action-link confirm">Confirm</a>
+                        <a href="/admin/booking/{{ b.id }}/cancel" class="action-link cancel">Cancel</a>
+                        {% else %}
+                        —
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="7">No bookings yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}
